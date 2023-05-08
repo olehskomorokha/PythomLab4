@@ -6,7 +6,7 @@ import matplotlib.figure
 import matplotlib.backends.backend_tkagg
 
 
-class Lab3:
+class Lab4:
     def __init__(self):
         self.root = Tk()
         self.root.geometry('840x600')
@@ -14,7 +14,7 @@ class Lab3:
 
         self.info_about = Label(self.root, text=f"Студент: Скомороха Олег\n"
                                                 f"Номер залікової книги: 2527\n"
-                                                f"Варіант: 2527 mod 10+1 = {2527 % 6 + 1}", bg="#FF6666", width=29)
+                                                f"Варіант: 2527 mod 6+1 = {2527 % 6 + 1}", bg="#FF6666", width=29)
         self.info_about.place(x=10, y=10)
         self.rebra = Label(self.root, text="Введіть вершини, між якими\nбуде ребро:", width=29, bg="#FF6666")
         self.rebra.place(x=10, y=65)
@@ -34,16 +34,16 @@ class Lab3:
         self.readList = Listbox(self.root, width=20)
         self.readList.place(x=270, y=31)
 
-        self.infoText1 = Label(self.root, text='Перша вершина:', bg="#FF6666", fg="black", width=26)
-        self.infoText1.place(x=510, y=10)
-        self.Entery_Get = Entry(self.root, width=6)
-        self.Entery_Get.insert(END, '---')
-        self.Entery_Get.place(x=700, y=10)
-        self.infoText2 = Label(self.root, text="Друга вершина:", bg="#FF6666", fg="black", width=26)
-        self.infoText2.place(x=510, y=36)
-        self.Entery_Get2 = Entry(self.root, width=6)
-        self.Entery_Get2.insert(END, '---')
-        self.Entery_Get2.place(x=700, y=36)
+        #self.infoText1 = Label(self.root, text='Перша вершина:', bg="#FF6666", fg="black", width=26)
+        #self.infoText1.place(x=510, y=10)
+        #self.Entery_Get = Entry(self.root, width=6)
+        #self.Entery_Get.insert(END, '---')
+        #self.Entery_Get.place(x=700, y=10)
+        #self.infoText2 = Label(self.root, text="Друга вершина:", bg="#FF6666", fg="black", width=26)
+        #self.infoText2.place(x=510, y=36)
+        #self.Entery_Get2 = Entry(self.root, width=6)
+        #self.Entery_Get2.insert(END, '---')
+        #self.Entery_Get2.place(x=700, y=36)
         self.button_find = Button(self.root, text='Розфарбувати граф', command=self.graph, width=25, bg="#00FFFF")
         self.button_find.place(x=510, y=80)
 
@@ -80,6 +80,35 @@ class Lab3:
                 else:
                     return
 """
+    Edges = {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+    def Set_Graphcolor(self, Edges):
+        result = {}
+        colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet", "pink", "gray", "black"]
+
+        def SortEdges():
+            sort_list = {}
+            for key in Edges:
+                sort_list[key] = len(Edges[key])
+            sort2 = sorted(sort_list.items(), key=lambda x: x[1], reverse=True)
+            return sort2
+
+        def colorize():
+            n = 0
+            def removeColor():
+                for color in colors:
+                    if color not in stackColor: return color
+                color = colors[n + 1]
+                colors.append(color)
+                return color
+            for key in sort_list:
+                stackColor = []
+                for key2 in Edges[key[0]]:
+                    if key2 in result: stackColor.append(result[key2])
+                color = removeColor()
+                result[key[0]] = color
+            return result
+        sort_list = SortEdges()
+        return colorize()
     def reading_Text(self):
         self.readList.insert(END, self.text.get())
         edges = self.readList.get(0, last=END)
@@ -90,26 +119,27 @@ class Lab3:
         self.canva.resize_event()
 
     def Mainwindow(self):
-        self.root.title("Лабораторна робота №3")
+        self.root.title("Лабораторна робота №4")
         self.root.mainloop()
 
     def drawing(self):
         if self.grahper is not None:
             netx.draw(self.grahper, self.start_yes, with_labels=True)
-        if self.wayes is not None:
-            netx.draw_networkx_nodes(self.grahper, self.start_yes, nodelist=self.wayes, node_color='yellow')
-            netx.draw_networkx_edges(self.grahper, self.start_yes, edgelist=self.wayes_edges, edge_color='red')
+        #--------------------------------------
+        #if self.wayes is not None:
+            #netx.draw_networkx_nodes(self.grahper, self.start_yes, nodelist=self.wayes, node_color='yellow')
+            #netx.draw_networkx_edges(self.grahper, self.start_yes, edgelist=self.wayes_edges, edge_color='red')
 
     def graph(self):
-        start = self.Entery_Get.get()
-        end = self.Entery_Get2.get()
-        self.wayes = netx.shortest_path(self.grahper, source=start, target=end)
-        self.wayes_edges = list(zip(self.wayes, self.wayes[1:]))
+        #start = self.Entery_Get.get()
+        #end = self.Entery_Get2.get()
+        #self.wayes = netx.shortest_path(self.grahper, source=start, target=end)
+        #self.wayes_edges = list(zip(self.wayes, self.wayes[1:]))
         self.place.cla()
         self.drawing()
         self.canva.resize_event()
 
 
 if __name__ == '__main__':
-    graph = Lab3()
+    graph = Lab4()
     graph.Mainwindow()
