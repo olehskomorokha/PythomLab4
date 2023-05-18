@@ -28,7 +28,6 @@ class Lab4:
         self.saveInfo.place(x=23, y=160)
         self.readInfo = Button(self.root, text="Зчитати дані з файлу", width=25, bg="#00FFFF")
         self.readInfo.place(x=23, y=210)
-
         self.infoList = Label(self.root, text="Список існуючих ребер:", bg="#FF6666")
         self.infoList.place(x=268, y=8)
         self.readList = Listbox(self.root, width=20)
@@ -80,8 +79,9 @@ class Lab4:
                 else:
                     return
 """
-    Edges = {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+
     def Set_Graphcolor(self, Edges):
+        Edges = self.readList.get(0, END)
         result = {}
         colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet", "pink", "gray", "black"]
 
@@ -109,6 +109,23 @@ class Lab4:
             return result
         sort_list = SortEdges()
         return colorize()
+    #CHAT GPT
+    def graph_coloring(self):
+        # Get the list of edges from the input
+        edges = self.readList.get(0, END)
+
+        # Create a networkx graph from the edges
+        graph = netx.parse_edgelist(list(edges))
+
+        # Perform graph coloring
+        coloring = netx.greedy_color(graph)
+
+        # Update the node colors in the graph plot
+        self.place.cla()
+        netx.draw(graph, pos=self.start_yes, with_labels=True, node_color=[coloring[node] for node in graph.nodes])
+
+        # Redraw the canvas
+        self.canva.draw()
     def reading_Text(self):
         self.readList.insert(END, self.text.get())
         edges = self.readList.get(0, last=END)
@@ -131,13 +148,7 @@ class Lab4:
             #netx.draw_networkx_edges(self.grahper, self.start_yes, edgelist=self.wayes_edges, edge_color='red')
 
     def graph(self):
-        #start = self.Entery_Get.get()
-        #end = self.Entery_Get2.get()
-        #self.wayes = netx.shortest_path(self.grahper, source=start, target=end)
-        #self.wayes_edges = list(zip(self.wayes, self.wayes[1:]))
-        self.place.cla()
-        self.drawing()
-        self.canva.resize_event()
+        self.graph_coloring()
 
 
 if __name__ == '__main__':
